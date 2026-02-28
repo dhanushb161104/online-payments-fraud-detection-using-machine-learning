@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard AI - Real-time Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Real-time online payment fraud detection dashboard powered by Machine Learning.">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <span class="logo-shield">🛡️</span>
+                <h1>FraudGuard <span class="highlight">AI</span></h1>
+            </div>
+            <p class="subtitle">Real-time Transaction Monitoring System</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Form Panel -->
+            <div class="glass-panel form-panel">
+                <h2>Analyze Transaction</h2>
+                <form id="transaction-form">
+                    <div class="input-group">
+                        <label for="amount">Transaction Amount ($)</label>
+                        <input type="number" id="amount" step="0.01" required placeholder="e.g. 1500.00">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="location_code">Location Code (0-9)</label>
+                        <input type="number" id="location_code" min="0" max="9" required placeholder="e.g. 5" title="A dummy code representing geographical region">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="device_code">Device Type</label>
+                        <select id="device_code" required>
+                            <option value="0">Mobile</option>
+                            <option value="1">Desktop</option>
+                            <option value="2">Tablet</option>
+                            <option value="3">Other/Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="hour_of_day">Hour of Day (0-23)</label>
+                        <input type="number" id="hour_of_day" min="0" max="23" required placeholder="e.g. 14">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="failed_logins">Recent Failed Logins (24h)</label>
+                        <input type="number" id="failed_logins" min="0" required placeholder="e.g. 0">
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="analyze-btn">
+                        <span class="btn-text">Analyze Risk</span>
+                        <div class="loader hidden" id="btn-loader"></div>
+                    </button>
+                    <p class="hint">Ensure the Flask backend is running on port 5000 before analyzing.</p>
+                </form>
+            </div>
+
+            <!-- Result Panel -->
+            <div class="glass-panel result-panel">
+                <h2>Analysis Result</h2>
+                <div id="result-container" class="empty-state">
+                    <div class="radar-scan"></div>
+                    <p>Awaiting transaction sequence...</p>
+                </div>
+                
+                <div id="result-content" class="hidden">
+                    <div class="status-indicator" id="status-indicator">
+                        <div class="status-icon" id="status-icon">✅</div>
+                        <h3 id="status-text">SAFE</h3>
+                    </div>
+                    
+                    <div class="metrics">
+                        <div class="metric-card">
+                            <span class="metric-label">Fraud Probability</span>
+                            <span class="metric-value highlight" id="prob-value">0.00%</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Risk Level</span>
+                            <span class="metric-value indicator-low" id="risk-value">LOW</span>
+                        </div>
+                    </div>
+                    
+                    <div class="action-recommendation" id="action-rec">
+                        <p>Transaction looks normal. No action required.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Logs Panel -->
+            <div class="glass-panel logs-panel">
+                 <h2>Recent Scans</h2>
+                 <ul id="scan-logs" class="scan-logs">
+                     <!-- Log entries generated via JS -->
+                 </ul>
+            </div>
+        </main>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
